@@ -2,8 +2,40 @@ import { PlusCircle } from 'phosphor-react'
 import styles from './App.module.css'
 import { Header } from './components/Header/Header'
 import clipboardSVG from './assets/clipboard.svg'
+import { TaskModel } from './shared/models/TaskModel'
+import { useState } from 'react'
+import { Task } from './components/Task/Task'
 
 export function App() {
+
+  const [tasks, setTasks] = useState<TaskModel[]>([new TaskModel('Criar Layout'),
+  new TaskModel('Criar Projeto'),
+  new TaskModel('Aplicar protótipo')])
+
+  function countSolvedTasks(): number {
+    return tasks.filter(task=>task.isSolved).length
+  }
+
+  function toogleTask(id:string){
+    const task = tasks.find(item => item.id == id)
+    task?.handleSolved()
+    if(task){
+      setTasks([...tasks])
+    }
+  }
+
+  function deleteTask(id:string) {
+    const indextask = tasks.findIndex(task => task.id == id)
+    if(indextask > -1){
+      const newTasks = tasks.filter(task=>task.id !== id)
+      setTasks(newTasks)
+    }
+  }
+
+  function renderTasks() {
+    return tasks.map(task=><Task key={task.id} value={task} onCheck={toogleTask} onDelete={deleteTask}/>)
+  }
+
   return (
     <div className={styles.container}>
       <Header/>
@@ -19,22 +51,29 @@ export function App() {
       <main className={styles.main}>
         <div className={styles.info}>
           <div>
-            Tarefas criadas <span> 0 </span>
+            Tarefas criadas <span> {tasks.length} </span>
           </div>
           <div>
-            Concluídas <span> 0 </span>
+            Concluídas <span>{tasks.length? `${countSolvedTasks()} de ${tasks.length}`: `0`} </span>
           </div>
         </div>
         <div className={styles.taskContainer}>
-          <div className={styles.tasksEmpty}>
-            <div className={styles.message}>
-              <img src={clipboardSVG} alt="clipboard image" />
-              <div>
-                <strong>Você ainda não tem tarefas cadastradas</strong>
-                <span>Crie tarefas e organize seus itens a fazer</span>
-              </div>
-            </div>
+          {tasks.length ?
+          <div className={styles.tasks}>
+            {renderTasks()}
           </div>
+          :(
+            (<div className={styles.tasksEmpty}>
+              <div className={styles.message}>
+                <img src={clipboardSVG} alt="clipboard image" />
+                <div>
+                  <strong>Você ainda não tem tarefas cadastradas</strong>
+                  <span>Crie tarefas e organize seus itens a fazer</span>
+                </div>
+              </div>
+            </div>)
+          )
+          }
         </div>
       </main>
       

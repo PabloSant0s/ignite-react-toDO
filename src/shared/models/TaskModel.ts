@@ -1,5 +1,5 @@
 import {v4 as uuid} from 'uuid'
-export class Task{
+export class TaskModel{
   #id: string
   #description: string
   #isSolved: boolean
@@ -22,8 +22,8 @@ export class Task{
     return this.#isSolved
   }
 
-  public set isSolved(value: boolean){
-    this.#isSolved = value
+  public handleSolved(): void{
+    this.#isSolved = !this.#isSolved
   }
   
 }
