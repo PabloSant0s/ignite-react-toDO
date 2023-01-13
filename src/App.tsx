@@ -1,8 +1,11 @@
 import styles from './App.module.css'
+import { Header } from './components/Header/Header'
 
 export function App() {
   return (
-    <h1>ToDo List</h1>
+    <div className={styles.container}>
+      <Header/>
+    </div>
   )
 }
 
