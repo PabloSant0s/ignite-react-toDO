@@ -3,10 +3,12 @@ import styles from './App.module.css'
 import { Header } from './components/Header/Header'
 import clipboardSVG from './assets/clipboard.svg'
 import { TaskModel } from './shared/models/TaskModel'
-import { useState } from 'react'
+import { ChangeEvent, FormEvent, useState } from 'react'
 import { Task } from './components/Task/Task'
 
 export function App() {
+
+  const [description, setDescription] = useState<string>('')
 
   const [tasks, setTasks] = useState<TaskModel[]>([new TaskModel('Criar Layout'),
   new TaskModel('Criar Projeto'),
@@ -14,6 +16,17 @@ export function App() {
 
   function countSolvedTasks(): number {
     return tasks.filter(task=>task.isSolved).length
+  }
+
+  function handleDescription(event: ChangeEvent<HTMLInputElement>) {
+    setDescription(event.target.value)
+  }
+
+  function handleCreateTask(event: FormEvent) {
+    event.preventDefault()
+    const task = new TaskModel(description)
+    setTasks([...tasks, task])
+    setDescription('')
   }
 
   function toogleTask(id:string){
@@ -40,9 +53,9 @@ export function App() {
     <div className={styles.container}>
       <Header/>
       <div className={styles.formContainer}>
-        <form className={styles.form}>
-          <input type="text" placeholder='Adicione uma nova tarefa'/>
-          <button>
+        <form onSubmit={handleCreateTask} className={styles.form}>
+          <input type="text" placeholder='Adicione uma nova tarefa' value={description} onChange={handleDescription} required/>
+          <button disabled={!description.length}>
             <span>Criar</span>
             <PlusCircle size={16}/>
           </button>

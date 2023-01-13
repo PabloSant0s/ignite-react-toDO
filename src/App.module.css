@@ -44,12 +44,18 @@
   color: var(--gray-100);
   line-height: 1.14;
   transition: backgroud-color 0.2s;
+  cursor: pointer;
+}
+
+.form>button:disabled {
+  cursor: no-drop;
 }
 
 .form>button:hover {
   background-color: var(--blue);
-  cursor: pointer;
 }
+
+
 
 .main {
   max-width: 736px;
