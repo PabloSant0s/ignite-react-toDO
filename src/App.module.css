@@ -2,3 +2,50 @@
   background-color: var(--gray-600);
   height: 100vh;
 }
+
+.formContainer {
+  margin: -1.69rem auto;
+  max-width: 736px;
+}
+
+.form {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+  line-height: 1.14;
+}
+
+.form>input {
+  flex: 1;
+  padding: 1rem;
+  background-color: var(--gray-500);
+  border-radius: 8px;
+  border: 1px solid var(--gray-700);
+  color: var(--gray-300);
+}
+
+.form>input:focus {
+  outline: 1px solid var(--purple-dark);
+  color: var(--gray-100);
+}
+
+.form>button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: bold;
+  background-color: var(--blue-dark);
+  border: 0;
+  border-radius: 8px;
+  padding: 1rem;
+  color: var(--gray-100);
+  line-height: 1.14;
+  transition: backgroud-color 0.2s;
+}
+
+.form>button:hover {
+  background-color: var(--blue);
+  cursor: pointer;
+}
